@@ -36,6 +36,24 @@ Get a licence key by creating a free account — see [Backend](#backend) below.
 
 Content is stored per page slug and per language, so the same element can hold different text in each language you configure.
 
+## Try it locally
+
+No account, no backend, no sign-up:
+
+```bash
+git clone https://github.com/FaziHamza/editinplace-cms.git
+cd editinplace-cms
+npm install
+npm run demo
+```
+
+Open **http://localhost:5173/?edit=true** and edit the sample page.
+
+Save and publish work as well — the demo runs its own backend inside the page
+and keeps everything in `localStorage`, so nothing is sent anywhere. Edit
+something, hit **Save Draft**, reload and it comes back. Hit **Publish**, drop
+`?edit=true` from the URL, and you are looking at what a visitor would see.
+
 ## Usage with a bundler
 
 If you would rather import it than use a script tag, skip the auto-init and create the instance yourself:
