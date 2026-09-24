@@ -40,12 +40,21 @@ The demo page lives at `demo/index.html` — edit it freely if you need differen
 content to test against. Just don't commit those edits unless they help
 everyone.
 
-### A note on saving
+### Saving and publishing
 
-Saving and publishing need a backend, and the demo has none. The editor opens
-and works, but **Save will fail**. That is expected. Almost all editor work —
-the toolbar, outlines, keyboard handling, the panel, images — can be done
-without ever saving.
+These work too. The demo ships its own backend in `demo/demo-api.js`, which
+answers the editor's requests from inside the page and keeps everything in
+`localStorage`. Nothing is sent anywhere.
+
+So the whole round trip is available to you: edit, **Save Draft**, reload and
+your text comes back, **Publish**, then open the page without `?edit=true` and
+see the published version. Image uploads work as well.
+
+To clear what you saved, run `resetDemo()` in the browser console.
+
+The sign-in box is skipped so the page opens ready to edit. If you want to see
+the login flow, run `EditInPlaceLib.secureClear()` in the console and reload —
+any email and password will be accepted.
 
 ## Where things live
 

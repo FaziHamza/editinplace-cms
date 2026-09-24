@@ -23,7 +23,16 @@ const TYPES = {
 
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
-  const rel = url.pathname === '/' ? 'demo/index.html' : url.pathname.slice(1);
+
+  // Send the root to the demo's real path, keeping ?edit=true. Serving the
+  // page at / would break its relative script tags, which resolve against
+  // the URL the browser sees rather than where the file lives.
+  if (url.pathname === '/') {
+    res.writeHead(302, { Location: `/demo/${url.search}` }).end();
+    return;
+  }
+
+  const rel = url.pathname.endsWith('/') ? `${url.pathname.slice(1)}index.html` : url.pathname.slice(1);
 
   // Keep requests inside the repo
   const file = join(ROOT, normalize(rel));

@@ -1641,7 +1641,9 @@ export class EditInPlace {
       const data = await res.json();
       // Use apiBase origin as base for the returned image path
       const imgOriginBase = this.config.clientApi || this.config.apiBase || '';
-      const baseUrl = this.config.imageBaseUrl || (imgOriginBase ? new URL(imgOriginBase).origin : '');
+      // `??`, not `||`: an explicit empty imageBaseUrl means the upload already
+      // returned something the browser can use as-is, such as a data URL.
+      const baseUrl = this.config.imageBaseUrl ?? (imgOriginBase ? new URL(imgOriginBase).origin : '');
       const fullUrl = baseUrl + data.path;
       if (this.activeImageEl) {
         const key = this.managedImages.get(this.activeImageEl)?.key || '';

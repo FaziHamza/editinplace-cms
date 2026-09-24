@@ -54,17 +54,33 @@
 
     <footer>Not part of the editor — just something to scroll past.</footer>
 
+    <!-- A backend that runs in this page. Must load before the editor. -->
+    <script src="./demo-api.js"></script>
+
     <script>
-      // An empty apiBase means "no backend". Leaving the option out would use
-      // the hosted API instead, which asks for a licence and a sign-in nobody
-      // working on the library has. With no backend the editor opens straight
-      // away; Save has nowhere to go and will fail, which is expected here.
+      // Points the editor at the in-page backend above, so signing in, saving,
+      // publishing and uploading an image all work without a server and
+      // without touching the hosted service. Everything is kept in
+      // localStorage; run resetDemo() in the console to clear it.
+      //
+      // Set apiBase to '' instead to run with no backend at all: the editor
+      // opens immediately and saving fails.
       window.__EDITINPLACE_CONFIG__ = {
-        apiBase: '',
-        licenseKey: 'DEV',
+        apiBase: window.location.origin + '/__demo-api',
+        licenseKey: 'DEMO',
+        imageBaseUrl: '',
         highlightColor: '#3b06b7',
       };
     </script>
+
     <script src="../dist/index.global.js"></script>
+
+    <script>
+      // Skip the sign-in box on first load. Any credentials work if you want
+      // to see it: run EditInPlaceLib.secureClear() in the console and reload.
+      if (!EditInPlaceLib.secureGet('builder_token')) {
+        EditInPlaceLib.secureSet('builder_token', 'demo-token');
+      }
+    </script>
   </body>
 </html>
