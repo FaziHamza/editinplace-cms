@@ -1,94 +1,124 @@
-# Contributing to EditInPlace CMS
+# Contributing
 
-Thanks for taking the time. Bug reports, docs fixes and pull requests are all
-welcome.
+Thanks for being here. Bug reports, typo fixes and pull requests are all
+welcome, and you do not need to know this codebase to help.
 
-## What lives here
+## What this repo is
 
-This repository holds the **editor library** published to npm as
-`editinplace-cms` — the script that makes a page editable. It is MIT licensed.
+This is the **editor library** — the script that makes a web page editable. It
+is published to npm as `editinplace-cms` and is MIT licensed.
 
-The hosted EditInPlace service (accounts, publishing, storage) is a separate,
-closed-source product. You do not need it to work on the library.
+The hosted EditInPlace service (accounts, saving, publishing) is a separate
+product and is not open source. You do not need it to work on this library.
 
-## Getting set up
+## Set up
+
+You need [Node.js](https://nodejs.org) 20 or newer. Then:
 
 ```bash
 git clone https://github.com/FaziHamza/editinplace-cms.git
 cd editinplace-cms
 npm install
-npm run dev        # rebuilds dist/ on every change
+npm run demo
 ```
 
-`npm run dev` watches `src/` and rewrites `dist/`. Point a test page at
-`dist/index.global.js` and reload as you work.
+Open **http://localhost:5173/?edit=true**. You should see a sample page with an
+editor button in the corner. That is the whole setup.
 
-## Trying your changes
+## Make a change
 
-The quickest loop is a plain HTML file that loads the built bundle:
+Open a second terminal and run:
 
-```html
-<h1>Edit me</h1>
-<p>And me.</p>
-
-<script>
-  window.__EDITINPLACE_CONFIG__ = {
-    apiBase: "https://your-backend.example.com/api",
-    licenseKey: "YOUR-KEY"
-  };
-</script>
-<script src="./dist/index.global.js"></script>
+```bash
+npm run dev
 ```
 
-Open it with `?edit=true` appended to the URL.
+This rebuilds the library every time you save a file in `src/`. Refresh the
+browser to see your change. Leave both terminals running while you work.
 
-Saving and publishing talk to a backend. If you are only changing editor
-behaviour — outlines, the toolbar, keyboard handling, the panel — you can work
-without one; the editor loads and renders fine, only save/publish will fail.
+The demo page lives at `demo/index.html` — edit it freely if you need different
+content to test against. Just don't commit those edits unless they help
+everyone.
+
+### A note on saving
+
+Saving and publishing need a backend, and the demo has none. The editor opens
+and works, but **Save will fail**. That is expected. Almost all editor work —
+the toolbar, outlines, keyboard handling, the panel, images — can be done
+without ever saving.
+
+## Where things live
+
+| File | What it does |
+| --- | --- |
+| `src/editinplace.ts` | The editor itself. The big one. |
+| `src/license.ts` | Works out which plan is active and what it unlocks |
+| `src/storage.ts` | Reads and writes browser storage |
+| `src/history.ts` | The local edit history, kept in IndexedDB |
+| `src/styles.ts` | All the editor's CSS |
+| `src/utils.ts` | Small helpers with no dependencies |
+| `src/types.ts` | Shared TypeScript types |
+| `src/icons.ts` | The SVG icons |
+| `src/constants.ts` | Fixed values used in more than one place |
+| `src/index.ts` | What the package exports, and the auto-start |
+
+Tests live in `tests/`, one file per module.
+
+If this is your first change, the smaller files are a much friendlier place to
+start than `editinplace.ts`.
 
 ## Before you open a pull request
 
+Run these three. All three must pass:
+
 ```bash
-npm run test:run   # must pass
-npm run build      # must succeed
-npx tsc --noEmit   # must be clean
+npm run test:run    # tests
+npx tsc --noEmit    # types
+npm run build       # build
 ```
 
-CI runs all three on every PR.
+The same three run automatically on your pull request.
 
-Tests live in `tests/` and run on [vitest](https://vitest.dev) against jsdom.
-`npm test` watches. New behaviour in an extracted module should come with a
-test; the modules exist precisely so they can be tested without standing up a
-whole page.
+If you changed how something behaves, add a test for it. Tests use
+[vitest](https://vitest.dev); `npm test` reruns them as you type.
 
-## What we look for
+## Opening the pull request
 
-- **One change per pull request.** Easier to review, easier to revert.
-- **Match the surrounding code.** Same naming, same comment density. The
-  codebase is plain TypeScript with no framework and no runtime dependencies —
-  please keep it that way.
-- **No new dependencies** unless there is a strong reason. "Zero dependencies"
-  is a feature of this package.
-- **Explain the why.** What was broken, what changes, how you checked it.
+1. Fork the repo on GitHub
+2. Make a branch: `git checkout -b fix-the-thing`
+3. Commit your change
+4. Push to your fork and open a pull request
+
+Please keep it to **one change per pull request** — it is easier to review and
+easier to undo.
+
+In the description, say what was wrong, what you changed, and how you checked
+it. A screenshot or a short clip helps a lot for anything visual.
+
+## House style
+
+- **No new dependencies.** Zero dependencies is a feature of this package.
+- **No frameworks.** Plain TypeScript and plain DOM.
+- **Write like the code around it.** Same naming, same amount of commenting.
 
 ## Reporting a bug
 
-Open an issue with:
+Open an issue and include:
 
-- What you expected and what happened instead
-- A minimal page that reproduces it
-- Browser and version
-- The package version (`npm ls editinplace-cms`)
+- What you expected, and what happened instead
+- A small page that reproduces it
+- Your browser and version
+- Your package version (`npm ls editinplace-cms`)
 
-A reproduction is worth more than a description — most bugs here depend on the
-exact HTML the editor is scanning.
+A page we can open ourselves is worth more than a paragraph describing it —
+most bugs here depend on the exact HTML the editor is looking at.
 
 ## Security
 
 Please do not open a public issue for a security problem. Email
-**support@editinplace.com** instead and we will get back to you.
+**support@editinplace.com** instead.
 
 ## Licence
 
-By contributing you agree that your contribution is licensed under the MIT
-licence that covers this library.
+By contributing, you agree your contribution is released under the MIT licence
+that covers this library.

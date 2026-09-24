@@ -21,7 +21,9 @@
     "dev": "tsup --watch",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "demo": "npm run build && node demo/serve.mjs",
+    "serve": "node demo/serve.mjs"
   },
   "keywords": [
     "cms",

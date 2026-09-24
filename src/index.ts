@@ -1,4 +1,13 @@
 export { EditInPlace } from './editinplace';
+
+/**
+ * Session storage helpers.
+ *
+ * Exported so a host page can seed or clear the editor's session itself —
+ * the demo page uses this to open in edit mode without a backend to sign
+ * in against.
+ */
+export { secureGet, secureSet, secureRemove, secureClear } from './storage';
 export type {
   EditInPlaceConfig,
   PlanFeatures,

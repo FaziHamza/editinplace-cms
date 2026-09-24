@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EditInPlace demo</title>
+    <style>
+      body {
+        margin: 0 auto;
+        padding: 48px 20px 120px;
+        max-width: 720px;
+        font: 16px/1.7 system-ui, sans-serif;
+        color: #1a1a1a;
+      }
+      img { max-width: 100%; border-radius: 8px; }
+      .note {
+        padding: 12px 16px;
+        border-left: 3px solid #3b06b7;
+        background: #f5f3ff;
+        font-size: 14px;
+      }
+      footer { margin-top: 48px; font-size: 14px; color: #666; }
+    </style>
+  </head>
+  <body>
+    <p class="note">
+      A scratch page for working on the editor. Everything below is editable —
+      click the button in the corner to start.
+    </p>
+
+    <h1>The quick brown fox</h1>
+    <p>
+      Ordinary paragraph text. Click it, type into it, and watch what the editor
+      does to the DOM around it.
+    </p>
+
+    <h2>A second heading</h2>
+    <p>
+      Some text with a <a href="https://example.com">link inside it</a>, because
+      links behave differently from plain text while editing.
+    </p>
+
+    <ul>
+      <li>A list item</li>
+      <li>Another one</li>
+    </ul>
+
+    <img src="https://placehold.co/720x300/3b06b7/ffffff?text=Editable+image" alt="Placeholder" />
+
+    <section>
+      <h3>Nested content</h3>
+      <p>This paragraph sits inside a section, one level deeper than the rest.</p>
+    </section>
+
+    <footer>Not part of the editor — just something to scroll past.</footer>
+
+    <script>
+      // No apiBase on purpose. Without one the editor skips licence validation
+      // and opens straight away, which is what you want while developing.
+      // Saving and publishing need a backend and will fail here.
+      window.__EDITINPLACE_CONFIG__ = {
+        licenseKey: 'DEV',
+        highlightColor: '#3b06b7',
+      };
+    </script>
+    <script src="../dist/index.global.js"></script>
+    <script>
+      // Edit mode normally waits for a builder sign-in, which needs the hosted
+      // service. There is nothing to sign in to here, so the demo seeds a
+      // placeholder session and the editor opens straight away.
+      EditInPlaceLib.secureSet('builder_token', 'DEV');
+    </script>
+  </body>
+</html>
