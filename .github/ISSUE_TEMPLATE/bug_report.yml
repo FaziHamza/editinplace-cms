@@ -1,0 +1,63 @@
+name: Bug report
+description: Something in the editor does not work as expected
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Most bugs here depend on the exact HTML the
+        editor is scanning, so a small reproduction helps more than anything.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: >
+        The smallest page that shows the problem — HTML plus your config
+        object. A link to a repo or CodeSandbox works too.
+      render: html
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: Output of `npm ls ngx-xtroedge-cms`, or the CDN URL you load.
+      placeholder: "1.5.0"
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: "Chrome 131, Firefox 133, Safari 18…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output
+      description: Any errors or warnings in the browser console.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I am on the latest version
+          required: false
+        - label: I searched existing issues
+          required: false

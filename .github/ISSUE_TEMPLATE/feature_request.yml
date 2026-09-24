@@ -1,0 +1,35 @@
+name: Feature request
+description: Suggest something the editor should be able to do
+labels: ["enhancement"]
+
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: >
+        Describe the problem rather than the solution. Knowing what you are
+        actually trying to achieve often leads to a better answer.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to see?
+      description: If you have a specific API or behaviour in mind, sketch it here.
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What have you tried?
+      description: Workarounds you are using today, or other libraries you looked at.
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: >
+            This belongs in the editor library, not the hosted XtroEdge service
+          required: false
