@@ -55,20 +55,16 @@
     <footer>Not part of the editor — just something to scroll past.</footer>
 
     <script>
-      // No apiBase on purpose. Without one the editor skips licence validation
-      // and opens straight away, which is what you want while developing.
-      // Saving and publishing need a backend and will fail here.
+      // An empty apiBase means "no backend". Leaving the option out would use
+      // the hosted API instead, which asks for a licence and a sign-in nobody
+      // working on the library has. With no backend the editor opens straight
+      // away; Save has nowhere to go and will fail, which is expected here.
       window.__EDITINPLACE_CONFIG__ = {
+        apiBase: '',
         licenseKey: 'DEV',
         highlightColor: '#3b06b7',
       };
     </script>
     <script src="../dist/index.global.js"></script>
-    <script>
-      // Edit mode normally waits for a builder sign-in, which needs the hosted
-      // service. There is nothing to sign in to here, so the demo seeds a
-      // placeholder session and the editor opens straight away.
-      EditInPlaceLib.secureSet('builder_token', 'DEV');
-    </script>
   </body>
 </html>

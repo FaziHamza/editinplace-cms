@@ -14,3 +14,11 @@ export const DEFAULT_EDITABLE_TAGS = [
   'a', 'button', 'li', 'label', 'small', 'blockquote', 'td', 'th',
   'div', 'header', 'footer',
 ];
+
+/**
+ * The hosted EditInPlace API, used when `apiBase` is not configured.
+ *
+ * Set `apiBase` to your own server to point the editor elsewhere, or to an
+ * empty string to run with no backend at all — see the demo page.
+ */
+export const DEFAULT_API_BASE = 'https://backend-xi-lime-d90e4p1ysf.vercel.app/api';

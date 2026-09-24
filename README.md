@@ -105,12 +105,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
 ## Configuration
 
-Only `licenseKey` and `apiBase` are required.
+Only `licenseKey` is required.
+
+`apiBase` decides which server the editor talks to. Leave it out and the
+hosted EditInPlace API is used, which is what most installs want. Set it to
+your own server to self-host, or to an empty string to run with no backend at
+all — the editor opens and nothing can be saved, which is how the demo page
+and local development work.
 
 | Option | Type | Default | What it does |
 | --- | --- | --- | --- |
 | `licenseKey` | `string` | — | Your licence key. Ties the editor to your account and domain. |
-| `apiBase` | `string` | — | Your backend API, e.g. `https://you.com/api`. Used for login, save and publish. |
+| `apiBase` | `string` | the hosted EditInPlace API | Which server handles sign-in, save and publish. Your own API, or `''` for none. |
 | `highlightColor` | `string` | `'#00C853'` | Accent colour for the outlines, panel and buttons. Editors can also change it from the Theme swatches. |
 | `languages` | `string[]` | `['en']` | Languages you keep content in. Two or more adds a language switcher. |
 | `defaultLanguage` | `string` | first of `languages` | Which language the editor opens in. |

@@ -4,7 +4,7 @@ import type {
   EditHistoryEntry, ManagedElementInfo, ManagedImageInfo, LicenseStatus, PlanFeatures
 } from './types';
 import { ICON } from './icons';
-import { DB_NAME, STORE_NAME, DEFAULT_EDITABLE_TAGS } from './constants';
+import { DB_NAME, STORE_NAME, DEFAULT_EDITABLE_TAGS, DEFAULT_API_BASE } from './constants';
 import { secureGet, secureSet, secureRemove, secureClear } from './storage';
 import {
   createElement, hexToRgb, darkenHex, resolveClientUrl, detectLanguage,
@@ -171,7 +171,11 @@ export class EditInPlace {
 
   constructor(config?: EditInPlaceConfig) {
     this.config = config || {};
-    if (!this.config.apiBase) this.config.apiBase = 'https://backend-xi-lime-d90e4p1ysf.vercel.app/api';
+    // Only fill in the hosted API when the option was left out entirely. An
+    // explicit empty string means "no backend": the editor then opens without
+    // a licence check or a sign-in, and nothing can be saved. That is how the
+    // demo page runs, and how anyone can work on the editor offline.
+    if (this.config.apiBase === undefined) this.config.apiBase = DEFAULT_API_BASE;
     this.containerSelector = this.config.containerSelector || '';
     this.editableTags = (this.config.editableTags || DEFAULT_EDITABLE_TAGS).map(t => t.toLowerCase());
     this.languages = this.config.languages || ['en'];
@@ -392,6 +396,19 @@ export class EditInPlace {
 
     if (wantsEdit) {
       const token = secureGet('builder_token');
+
+      // With no apiBase there is no server to sign in against, so demanding a
+      // sign-in would only produce a login box that can never succeed. This is
+      // the local development case — the editor opens and nothing can be saved.
+      // It cannot weaken a real install: every site that saves has an apiBase,
+      // and the API re-checks the token on every request regardless.
+      if (!token && !this.config.apiBase) {
+        this.editMode = true;
+        this.currentLang = detectLanguage(this.languages, this.defaultLanguage);
+        this.loadTranslationsAndInit(false);
+        return;
+      }
+
       if (!token) {
         // No token → show login modal, do NOT enable edit mode yet
         if (!this.pendingEditMode) {
