@@ -824,7 +824,7 @@ export class EditInPlace {
 
     const assignKey = (el: HTMLElement, sectionSlug: string) => {
       const sectionKey = sectionSlug === '/header' ? 'header'
-                       : sectionSlug === '/footer' ? 'footer' : 'page';
+        : sectionSlug === '/footer' ? 'footer' : 'page';
       if (!tagCounters[sectionKey]) tagCounters[sectionKey] = {};
       const tag = el.tagName.toLowerCase();
       if (!tagCounters[sectionKey][tag]) tagCounters[sectionKey][tag] = 0;
@@ -1048,7 +1048,7 @@ export class EditInPlace {
       this.setElementContent(el, val);
     }
     el.setAttribute('contenteditable', 'true');
-    el.style.setProperty('outline', `2px dashed ${this.highlightColor}`, 'important');
+    el.style.setProperty('outline', `5px dashed ${this.highlightColor}`, 'important');
     el.style.setProperty('outline-offset', '-2px', 'important');
     el.style.cursor = 'text';
     el.style.transition = 'background 0.2s';
