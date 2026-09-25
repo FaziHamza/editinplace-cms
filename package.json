@@ -1,6 +1,6 @@
 {
   "name": "editinplace-cms",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "sideEffects": true,
   "description": "Framework-agnostic inline CMS. Add ?edit=true to any URL and your site becomes editable. Works with Angular, React, Next.js, or plain HTML.",
   "main": "dist/index.js",
